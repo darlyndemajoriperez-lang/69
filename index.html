@@ -341,9 +341,9 @@ html,body{
   <div id="groupSection">
     <img class="group-photo" src="https://i.ibb.co/N6hKPj8J/IMG-20260628-090816-968.jpg" alt="Group">
     <div class="channel-name">😈𝗢𝗡𝗟𝗬𝗙𝗔𝗡𝗦🔥</div>
-    <div class="channel-sub">Grupo privado</div>
+    <div class="channel-sub">Private Group</div>
     <div class="mini-thumbs" id="miniThumbs"></div>
-    <div class="channel-info" id="channelInfo">Carlos castillo, Sofi vz... and 10,240 miembros más</div>
+    <div class="channel-info" id="channelInfo">Carlos castillo, Sofi vz... and 10,200 more members</div>
 
     <div id="rulesContainer">
       <span class="rules-header-tag">Group Terms & Conditions (Step 3/3)</span>
@@ -409,7 +409,8 @@ html,body{
       </div>
 
       <button id="acceptRulesBtn" style="display:none;" disabled>I Accept the Rules & Join</button>
-      <a id="accessBtn" href="#">Join Chat Now 👈</a>
+      <button id="accessBtn" style="display:none; background:var(--btn-verde); border:none; color:#000; width: 100%; padding:14px 20px; border-radius:14px; font-size: 16px; font-weight:700; cursor:pointer;">Join Chat Now 👈</button>
+      
     </div>
 
     <div id="message">
@@ -438,13 +439,13 @@ const pContainer=document.getElementById("pContainer");
 const counterContainer=document.getElementById("counterContainer");
 const warningText=document.getElementById("warningText");
 
-const enlaceDestino = "https://t.me/+w4XxLFOUMno5MmYx"; 
-accessBtn.href = enlaceDestino;
+const enlaceDestino = "tg://join?invite=oIlou09fTJZmODY5";
+
 
 // Miniaturas del Header Fijo
 const miniaturas=[ 
-  "https://i.ibb.co/jvpwSDYh/IMG-20260621-093615-904.jpg","https://i.ibb.co/1tR2XpWL/2-1.jpg","https://i.ibb.co/WvhS43c7/IMG-20260404-200207-848.jpg","https://i.ibb.co/0yGmfxT3/FB-IMG-1770230948105.jpg","https://i.ibb.co/gMfBZwxR/IMG-20260218-122600-537.jpg"
-  "https://i.ibb.co/hxGWys9j/IMG-20260628-091130-922.jpg","https://i.ibb.co/WvhS43c7/IMG-20260404-200207-848.jpg","https://i.ibb.co/xKYcWms1/IMG-20260301-105400-175.jpg"
+  "https://i.ibb.co/jvpwSDYh/IMG-20260621-093615-904.jpg","https://i.ibb.co/pvBjnr4w/IMG-20260628-090021-257.jpg","https://i.ibb.co/1tR2XpWL/2-1.jpg",
+  "https://i.ibb.co/0yGmfxT3/FB-IMG-1770230948105.jpg","https://i.ibb.co/gMfBZwxR/IMG-20260218-122600-537.jpg","https://i.ibb.co/pvBjnr4w/IMG-20260628-090021-257.jpg"
 ];
 
 // TUS NUEVOS ENLACES EXCLUSIVOS PARA ROTAR EN LOS POPUPS DE VIDEO/FOTO
@@ -463,9 +464,9 @@ const miniaturasPopup = [
   "https://i.ibb.co/q3Qxgq0F/IMG-20260506-155451-686.jpg"
 ];
 
-const nombresCortos = ["Alex G.", "Sofi V.", "Dan K.", "Max", "Leo R.", "Mery", "VIP"," cp","veronica","John", "Chris"];
-const nombresRusos = ["Dmitry", "Ivan", "Anastasia", "Nikolai","69","luna", "Vladimir", "Mikhail", "Svetlana", "Artem"];
-const perfilSoloEmojis = ["🍒😈🔥", "🔞🔞", "🍌🍑✨", "😈🔥"," 🍭","🤠", "🍒🔞"];
+const nombresCortos = ["Alex G.", "Sofi V.", "Dan K.", "Max", "Leo R.", "Mery", "John", "Chris"];
+const nombresRusos = ["Dmitry", "Ivan", "Anastasia", "Nikolai", "Vladimir", "Mikhail", "Svetlana", "Artem"];
+const perfilSoloEmojis = ["🍒😈🔥", "🔞🔞", "🍌🍑✨", "😈🔥", "🍒🔞"];
 
 function generarNombreVariado() {
   const tipo = Math.floor(Math.random() * 3);
@@ -495,8 +496,9 @@ shareBtn.addEventListener("click",()=>{
   lastClickTime = currentTime;
   shares++;
   
+  // AQUI EL CAMBIO: Quitamos el "if(shares <= 2)" para permitir los 5 clics
   if(shares <= 5){
-    window.open("https://t.me/share/url?url=🔞ONLYFANS:https://kut.lat/eEva","_blank");
+    window.open("https://t.me/share/url?url=🔞 ONLYFANS:https://kut.lat/eEva ","_blank");
     
     const porcentaje = (shares / 5) * 100;
     pBar.style.width = porcentaje + "%";
@@ -504,6 +506,7 @@ shareBtn.addEventListener("click",()=>{
     currentStep.textContent = shares;
   }
   
+  // Esta parte ya estaba bien, ahora sí se ejecutará al llegar a 5
   if(shares === 5){
     shareBtn.style.display = "none";
     pContainer.style.display = "none";
@@ -516,6 +519,8 @@ shareBtn.addEventListener("click",()=>{
     rulesScrollBox.addEventListener("scroll", verificarScrollReglas);
   }
 });
+
+ 
 
 function verificarScrollReglas() {
   if (rulesScrollBox.scrollHeight - rulesScrollBox.scrollTop <= rulesScrollBox.clientHeight + 12) {
@@ -532,15 +537,23 @@ acceptRulesBtn.addEventListener("click", () => {
   accessBtn.style.display = "block";
 });
 
-accessBtn.addEventListener("click",(e)=>{
+accessBtn.addEventListener("click", (e) => {
+  e.preventDefault();
   accessBtn.classList.add("vibrate");
-  setTimeout(()=>accessBtn.classList.remove("vibrate"),400);
-  if(accessBtn.getAttribute("href") === "#") {
-     e.preventDefault();
-     smallText.style.display="block";
-     smallText.textContent="Access error. Please reload and try again.";
-  }
+
+  // Intentamos abrir el esquema tg://
+  window.location.href = enlaceDestino;
+
+  // Si después de 2 segundos no se abrió, damos una alternativa
+  setTimeout(() => {
+    window.location.href = "https://t.me/+w4XxLFOUMno5MmYx";
+  }, 2000);
+
+  setTimeout(() => accessBtn.classList.remove("vibrate"), 400);
 });
+
+
+
 
 function actualizarMiniaturas(){
   miniThumbs.innerHTML="";
@@ -617,4 +630,4 @@ function triggerPopupLoop() {
 }
 </script>
 </body>
-</html>
+          </html>
